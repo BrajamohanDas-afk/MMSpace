@@ -262,3 +262,6 @@ webpack-bundle-analyzer-report.html
 
 # uncomment this when deploying issues file
 # issues.md
+
+ml_service/venv/
+ml_service/__pycache__/

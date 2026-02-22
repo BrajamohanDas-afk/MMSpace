@@ -138,6 +138,7 @@ app.use('/api/grievances', require('./routes/grievanceRoutes'));
 app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/announcements', require('./routes/announcementRoutes'));
 app.use('/api/csv', require('./routes/csvUploadRoutes'));
+app.use('/api/placement', require('./routes/placementRoutes'));
 
 // Health check
 app.get('/api/health', async (req, res) => {

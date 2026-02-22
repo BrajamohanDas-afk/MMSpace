@@ -8,6 +8,7 @@ import AnnouncementFeed from '../components/AnnouncementFeed'
 import api from '../services/api'
 import { Users, MessageSquare, Calendar, TrendingUp, Phone, Mail, User, Eye, FileText, Megaphone, RefreshCcw, Shield } from 'lucide-react'
 import AdminDashboard from './AdminDashboard'
+import PlacementPrediction from '../components/PlacementPrediction'
 
 const DashboardPage = () => {
     const { user, profile } = useAuth()
@@ -215,11 +216,10 @@ const DashboardPage = () => {
                                                 {leave.leaveType} • {leave.daysCount} {leave.daysCount === 1 ? 'Day' : 'Days'}
                                             </p>
                                             <div className="flex items-center gap-2 mt-2">
-                                                <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold capitalize ${
-                                                    leave.status === 'pending' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300' :
+                                                <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold capitalize ${leave.status === 'pending' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300' :
                                                     leave.status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300' :
                                                         'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300'
-                                                }`}>
+                                                    }`}>
                                                     {leave.status}
                                                 </span>
                                                 <span className="text-xs text-slate-500 dark:text-slate-400">
@@ -660,11 +660,10 @@ const DashboardPage = () => {
                                             {new Date(leave.startDate).toLocaleDateString()} • {leave.daysCount} {leave.daysCount === 1 ? 'Day' : 'Days'}
                                         </p>
                                         <div className="flex items-center gap-2 mt-2">
-                                            <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold capitalize ${
-                                                leave.status === 'pending' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300' :
+                                            <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold capitalize ${leave.status === 'pending' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300' :
                                                 leave.status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300' :
                                                     'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300'
-                                            }`}>
+                                                }`}>
                                                 {leave.status}
                                             </span>
                                         </div>
@@ -682,6 +681,9 @@ const DashboardPage = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Placement Prediction Section */}
+            <PlacementPrediction />
 
             {/* Announcements Section */}
             <div className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl shadow-2xl rounded-3xl border border-white/20 dark:border-slate-700/50">
@@ -747,7 +749,7 @@ const DashboardPage = () => {
                     </div>
 
                     {/* Open Complaints Card */}
-                    <div 
+                    <div
                         onClick={() => navigate('/grievances')}
                         className="group relative overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-amber-200/50 dark:border-amber-500/30"
                     >
@@ -897,48 +899,46 @@ const DashboardPage = () => {
                     </div>
                     <div className="p-5">
                         <div className="space-y-3">{recentGrievances.length > 0 ? (
-                                recentGrievances.map((grievance, index) => (
-                                    <div
-                                        key={grievance._id}
-                                        className="group/item flex items-start space-x-3 p-3 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100/50 dark:from-slate-700/30 dark:to-slate-700/20 hover:from-amber-50 hover:to-orange-50 dark:hover:from-amber-900/20 dark:hover:to-orange-900/20 border border-slate-200/50 dark:border-slate-600/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-md"
-                                    >
-                                        <div className="flex-shrink-0">
-                                            <div className={`h-10 w-10 rounded-lg flex items-center justify-center shadow-lg transition-transform group-hover/item:scale-110 ${
-                                                grievance.status === 'resolved' ? 'bg-gradient-to-br from-green-500 to-emerald-600' :
-                                                grievance.status === 'rejected' ? 'bg-gradient-to-br from-red-500 to-pink-600' :
+                            recentGrievances.map((grievance, index) => (
+                                <div
+                                    key={grievance._id}
+                                    className="group/item flex items-start space-x-3 p-3 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100/50 dark:from-slate-700/30 dark:to-slate-700/20 hover:from-amber-50 hover:to-orange-50 dark:hover:from-amber-900/20 dark:hover:to-orange-900/20 border border-slate-200/50 dark:border-slate-600/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-md"
+                                >
+                                    <div className="flex-shrink-0">
+                                        <div className={`h-10 w-10 rounded-lg flex items-center justify-center shadow-lg transition-transform group-hover/item:scale-110 ${grievance.status === 'resolved' ? 'bg-gradient-to-br from-green-500 to-emerald-600' :
+                                            grievance.status === 'rejected' ? 'bg-gradient-to-br from-red-500 to-pink-600' :
                                                 'bg-gradient-to-br from-amber-500 to-orange-600'
                                             }`}>
-                                                <FileText className="h-5 w-5 text-white" />
-                                            </div>
+                                            <FileText className="h-5 w-5 text-white" />
                                         </div>
-                                        <div className="flex-1 min-w-0">
-                                            <p className="text-sm font-semibold text-slate-800 dark:text-white truncate">
-                                                {grievance.subject}
-                                            </p>
-                                            <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-                                                {grievance.menteeId?.fullName} • {new Date(grievance.dateOfIncident).toLocaleDateString()}
-                                            </p>
-                                            <div className="flex items-center gap-2 mt-2">
-                                                <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold capitalize ${
-                                                    grievance.status === 'pending' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300' :
-                                                    grievance.status === 'in-review' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' :
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-semibold text-slate-800 dark:text-white truncate">
+                                            {grievance.subject}
+                                        </p>
+                                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                                            {grievance.menteeId?.fullName} • {new Date(grievance.dateOfIncident).toLocaleDateString()}
+                                        </p>
+                                        <div className="flex items-center gap-2 mt-2">
+                                            <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold capitalize ${grievance.status === 'pending' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300' :
+                                                grievance.status === 'in-review' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' :
                                                     grievance.status === 'resolved' ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300' :
-                                                    'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300'
+                                                        'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300'
                                                 }`}>
-                                                    {grievance.status}
-                                                </span>
-                                            </div>
+                                                {grievance.status}
+                                            </span>
                                         </div>
                                     </div>
-                                ))
-                            ) : (
-                                <div className="text-center py-12">
-                                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-700/50 mb-3">
-                                        <FileText className="h-8 w-8 text-slate-400" />
-                                    </div>
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">No recent complaints</p>
                                 </div>
-                            )}
+                            ))
+                        ) : (
+                            <div className="text-center py-12">
+                                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-700/50 mb-3">
+                                    <FileText className="h-8 w-8 text-slate-400" />
+                                </div>
+                                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">No recent complaints</p>
+                            </div>
+                        )}
                         </div>
                     </div>
                 </div>
